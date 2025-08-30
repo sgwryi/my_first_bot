@@ -2,7 +2,7 @@ import os
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, send_messages
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
@@ -37,26 +37,27 @@ def callback():
 
     return "OK"
 
-
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    # line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.message.text))
+    user_text = event.message.text
+
+    # 条件によって返信内容を変える
     if user_text == "ブルゾン":
         reply_text = "ちえみ"
-    # elif user_text == "外出":
-    #     reply_text = "外出中ですね。気をつけて行ってらっしゃい！🚶‍♂️"
-    # elif "掃除" in user_text:
-    #     reply_text = "掃除状況を記録しました！✨"
-    # else:
-    #     reply_text = f"「{user_text}」ですね。詳しく教えてもらえると助かります！"
+    else:
+        reply_text = f"「{user_text}」ですね。何かお手伝いできることはありますか？"
 
-    # 返信を送信
-
-
-# if __name__ == "__main__":
-#     port = int(os.getenv("PORT", 5000))
-#     app.run(host="0.0.0.0", port=port)
-   line_bot_api.reply_message(
+    line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=reply_text)
     )
+# @handler.add(MessageEvent, message=TextMessage)
+# def handle_message(event):
+#     recieved_message = recieved_message[7:-4]
+#     send_messages = recieved_message(event.reply_token, TextSendMessage)
+#     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.message.text))
+
+
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
