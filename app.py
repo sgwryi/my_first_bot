@@ -40,9 +40,23 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.message.text))
+    # line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.message.text))
+    if user_text == "ブルゾン":
+        reply_text = "ちえみ"
+    # elif user_text == "外出":
+    #     reply_text = "外出中ですね。気をつけて行ってらっしゃい！🚶‍♂️"
+    # elif "掃除" in user_text:
+    #     reply_text = "掃除状況を記録しました！✨"
+    # else:
+    #     reply_text = f"「{user_text}」ですね。詳しく教えてもらえると助かります！"
+
+    # 返信を送信
 
 
-if __name__ == "__main__":
-    port = int(os.getenv("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+# if __name__ == "__main__":
+#     port = int(os.getenv("PORT", 5000))
+#     app.run(host="0.0.0.0", port=port)
+   line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=reply_text)
+    )
