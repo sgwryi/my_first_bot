@@ -37,25 +37,12 @@ def callback():
 
     return "OK"
 
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    user_text = event.message.text
-
-    # 条件によって返信内容を変える
-    if user_text == "ブルゾン":
-        reply_text = "ちえみ"
-    else:
-        reply_text = f"「{user_text}」ですね。何かお手伝いできることはありますか？"
-
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=reply_text)
-    )
-# @handler.add(MessageEvent, message=TextMessage)
-# def handle_message(event):
-#     recieved_message = recieved_message[7:-4]
-#     send_messages = recieved_message(event.reply_token, TextSendMessage)
-#     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.message.text))
+    recieved_message = recieved_message[7:-4]
+    send_messages = recieved_message(event.reply_token, TextSendMessage)
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.message.text))
 
 
 if __name__ == "__main__":
